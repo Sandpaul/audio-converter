@@ -7,6 +7,9 @@ def audio_converter(directory_path: str, from_format: str, to_format: str):
 
     songs = glob.glob(f"{directory_path}/*.{from_format}")
 
+    if len(songs) == 0:
+        raise FromFormatFilesNotFoundError(f"No {from_format} files found in {directory_path}")
+
     for song in songs:
         song_name = os.path.splitext(song)[0]
         print(f"Converting {song_name} from {from_format} to {to_format}...")
@@ -14,3 +17,6 @@ def audio_converter(directory_path: str, from_format: str, to_format: str):
         song = convert.from_file(song, format=from_format)
         song.export(destination, to_format)
         print(f"{song_name} converted! 🎶")
+
+class FromFormatFilesNotFoundError(Exception):
+    """Catches instances where no files of given from_format are found in given directory_path."""
