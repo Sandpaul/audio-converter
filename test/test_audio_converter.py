@@ -1,24 +1,18 @@
-import pytest
+"""This module contains the test suite for `audio_converter()`."""
 
-import pathlib
 import glob
 import os
+import pathlib
+
+import pytest
 
 from src.audio_converter import audio_converter, FromFormatFilesNotFoundError
 
-# "/Users/paulsandford/Documents/Coding/projects/audio-converter/test_m4a/"
-
-"""
-- Test that it works on all songs in folder
-- Test that is saves new file in correct destination
-- Error if provided wrong file type for from_format
-- Error if provided invalid to_format or from_format
-
-"""
 
 @pytest.fixture()
 def test_files_path():
     return f"{pathlib.Path(__file__).parent.resolve()}/test_files/"
+
 
 @pytest.mark.describe("audio_converter()")
 @pytest.mark.it("should convert multiple audio files and save in same directory")
@@ -33,7 +27,9 @@ def test_multiple_audio_files(test_files_path):
 
 
 @pytest.mark.describe("audio_converter()")
-@pytest.mark.it("should raise FromFormatFilesNotFoundError when passed invalid file type")
+@pytest.mark.it(
+    "should raise FromFormatFilesNotFoundError when passed invalid file type"
+)
 def test_invalid_file_type(test_files_path):
     with pytest.raises(FromFormatFilesNotFoundError):
         audio_converter(test_files_path, "mp3", "mp3")
