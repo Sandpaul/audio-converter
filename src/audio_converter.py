@@ -26,11 +26,11 @@ def audio_converter(directory_path: str, from_format: str, to_format: str):
 
     for song in songs:
         song_name = os.path.splitext(song)[0]
-        print(f"Converting {song_name} from {from_format} to {to_format}...")
+        print(f"Converting {song_name.rsplit('/', 1)[-1]} from {from_format} to {to_format}...")
         destination = f"{song_name}.{to_format}"
         song = convert.from_file(song, format=from_format)
         song.export(destination, to_format)
-        print(f"{song_name} converted! 🎶")
+        print(f"{song_name.rsplit('/', 1)[-1]} converted! 🎶")
 
 
 class FromFormatFilesNotFoundError(Exception):
